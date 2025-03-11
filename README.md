@@ -12,5 +12,12 @@
 https://github.com/martynovaa25/test_poetry.git
 ```
 
+#Зависимости
+
+Установите зависимости:
+```
+pip install -r requirements.txt
+```
+
 
 
