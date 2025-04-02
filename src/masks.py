@@ -1,9 +1,5 @@
 from typing import Union
 
-'''получаем данные карты'''
-card_number = input()
-account_number = input()
-
 
 def get_mask_card_number(card_number: Union[str, int]) -> Union[str]:
     '''возвращает скрытый номер карты'''
