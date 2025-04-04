@@ -6,12 +6,12 @@ def empty_transactions():
     return []
 
 
-def filter_by_currency(transaction, currency):
+def filter_by_currency(transactions, currency):
     """Функция, которая принимает на вход список словарей транзакций и валюту и находит
     из всего списка транзакцию с нужной валютой"""
-    currency_code = list((x for x in transaction if x["operationAmount"]["currency"]["code"] == currency))
-    for element in currency_code:
-        yield element
+    for transaction in transactions:
+        if transaction.get('operationAmount', {}).get('currency', {}).get('code') == currency:
+            yield transaction
 
 
 def transaction_descriptions(transactions):
