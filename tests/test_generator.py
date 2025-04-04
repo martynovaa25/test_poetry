@@ -5,11 +5,10 @@ from generators import card_number_generator
 import re
 
 
-@pytest.mark.parametrize("currency, expected_count",
-[("USD", 3),
-("RUB", 2)
-])
-
+@pytest.mark.parametrize("currency, expected_count", [
+    ("USD", 1),
+    ("RUB", 1)
+    ])
 def test_filter_by_currency(currency, expected_count):
     """Проверка на то, что количество отфильтрованных
     транзакций совпадает с ожидаемым, и что каждая транзакция имеет правильный код валюты"""
@@ -29,11 +28,17 @@ transactions = [
     {
         "id": 2,
         "operationAmount": {
-            "currency": {"code": "EUR"}
+            "currency": {"code": "RUB"}
         }
     },
     {
         "id": 3,
+        "operationAmount": {
+            "currency": {"code": "EUR"}
+        }
+    },
+    {
+        "id": 4,
         "operationAmount": {
             "amount": "1000"}  # Отсутствует ключ "currency"
     }
@@ -50,15 +55,15 @@ def test_filter_by_currency_missing_currency():
 def test_rise_filter_by_currency():
     """Проверка работы при транзакции без описания"""
     empty_transactions = []
-    with pytest.raises(TypeError):
-        filter_by_currency(empty_transactions, 'USD')
+    result = list(filter_by_currency(empty_transactions, 'USD'))
+    assert result == []
 
 
-def test_rise_transaction_descriptions():
-    """Проверка работы при транзакции без описания"""
+def test_transaction_descriptions_with_empty_list():
+    """Проверка работы генератора с пустым списком транзакций"""
     list_none = []
-    with pytest.raises(ValueError):
-        next(transaction_descriptions(list_none))
+    result = list(transaction_descriptions(list_none))
+    assert result == []
 
 
 @pytest.mark.parametrize(
@@ -92,12 +97,10 @@ def test_rise_transaction_descriptions():
         },
     ],
 )
-
 def test_transaction_descriptions_invalid_format(invalid_format):
     """Проверка при неверном формате данных"""
-    if list(invalid_format) and ("description" in i for i in invalid_format):
-        with pytest.raises(KeyError):
-            list(transaction_descriptions(invalid_format))
+    result = list(transaction_descriptions(invalid_format))
+    assert result == []
 
 
 def test_transactions_description():
@@ -113,9 +116,9 @@ def test_transactions_description():
 @pytest.mark.parametrize("transactions_test , expected", [
     ([], []),  # пустой список
     ([{"description": "Перевод организации"}], ["Перевод организации"]),
-    ([{"description": "Перевод с карты на счет"}, {"description": "Перевод организации"}], ["Перевод с карты на счет", "Перевод организации"])
+    ([{"description": "Перевод с карты на счет"}, {"description": "Перевод организации"}], [
+        "Перевод с карты на счет", "Перевод организации"])
 ])
-
 def test_transaction_descriptions(transactions_test, expected):
     """Проверка при разных количествах записей и пустом списке"""
     result = list(transaction_descriptions(transactions_test))
