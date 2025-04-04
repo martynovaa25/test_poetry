@@ -17,14 +17,9 @@ def filter_by_currency(transactions, currency):
 def transaction_descriptions(transactions):
     """Генератор, на вход которого подается список словарей с транзакциями,
     на выходе - описание операции"""
-    if not transactions:
-        raise ValueError("Передано пустое значение!")
-
-    for item in transactions:
-        if "description" not in item:
-            yield 'Отсутствует описание'
-        else:
-            yield item["description"]
+    for transaction in transactions:
+        if isinstance(transaction, dict)  and "description" in dict(transaction):
+            yield transaction.get("description", "Нет описания")
 
 
 def card_number_generator(start, stop):
