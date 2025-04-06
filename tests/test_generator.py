@@ -1,8 +1,8 @@
-import pytest
-from generators import filter_by_currency
-from generators import transaction_descriptions
 from generators import card_number_generator
+from generators import filter_by_currency
+import pytest
 import re
+from generators import transaction_descriptions
 
 
 @pytest.mark.parametrize("currency, expected_count", [
