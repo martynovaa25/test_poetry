@@ -10,11 +10,11 @@ def test_filter_by_state_incorrect_input_data():
                 {"id": 594226727, "state": "CLOSED", "date": "2018-09-12T21:27:25.241689"},
                 {"id": 615064591, "state": "CLOSED", "date": "2018-10-14T08:21:33.419441"},
             ],
-            state = "EXECUTED"
+            state="EXECUTED"
         )
 
 
-@pytest.mark.parametrize("input_data, expected_output", [
+@pytest.mark.parametrize("input_data,expected_output", [
     ([{'date': '2023-10-01'}, {'date': '2023-09-01'}], [{'date': '2023-10-01'}, {'date': '2023-09-01'}]),
     ([{'date': '2023-09-01'}, {'date': '2023-10-01'}], [{'date': '2023-10-01'}, {'date': '2023-09-01'}]),
     ([{'date': '2023-09-01'}, {'date': '2023-09-01'}], [{'date': '2023-09-01'}, {'date': '2023-09-01'}])
