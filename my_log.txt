@@ -1,0 +1,6 @@
+summa ok. 3
+summa ok. Result: 3
+summa ok. Result: 3
+summa ok. Result: 3
+summa ok. Result: 3
+summa ok. Result: 3
